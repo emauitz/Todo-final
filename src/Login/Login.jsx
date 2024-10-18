@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import CustomInput from '../Components/Input';
 import CustomButton from '../Components/Button';
 import { useNavigate } from 'react-router-dom';
+
 function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -14,10 +15,25 @@ function LoginForm() {
     };
 
     const iniciarSesion = (userEmail, userPassword) => {
+        console.log('Recibi un email: ' + userEmail + '. ' + 'Recibi un password: ' + userPassword); //
         const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+
         try {
             if (userEmail && userPassword) {
                 const usuario = usuarios.find(user => user.email === userEmail && user.password === userPassword);
+                let existe;
+                try {
+                    if (usuario) {
+                        existe = true;  // Asignación correcta
+                        console.log('el usuario es: ' + existe);
+                    } else {
+                        existe = false;  // Si alguno de los valores es falso
+                        console.log('el usuario es: ' + existe);
+                    }
+                } catch (error) {
+                    console.log('La variable "user" no existe.');
+                    existe = false;  // Si hay error, la variable no existe
+                }
                 if (!usuario) {
                     Swal.fire({
                         icon: 'error',
@@ -61,7 +77,7 @@ function LoginForm() {
             <CustomButton
                 type="submit"
                 label="Iniciar Sesión"
-                funcion={handleSubmit} 
+                funcion={handleSubmit}
             />
         </form>
     );
