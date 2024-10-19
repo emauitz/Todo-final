@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import CustomButton from '../Components/Button';
-import CustomInput from '../Components/Input';
+import CustomButton from '../Button';
+import CustomInput from '../Input';
 import Swal from 'sweetalert2';
 
 function SignupForm() {
