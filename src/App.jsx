@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import LoginPage from './Login/LoginPage.jsx';
+import LoginPage from './Components/Login/LoginPage.jsx';
 import MainPage from './Sections/MainPage.jsx';
 import SettingsModal from './ModalSettings/SettingsModal.jsx';
 import AuthProvider from './context/AuthContext.jsx';
@@ -17,7 +17,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/" element={<MainPage />} />
         </Routes>
-        <SettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
+        <SettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} cassName="ModalSettings" />
       </BrowserRouter>
     </AuthProvider>
   );

@@ -59,7 +59,7 @@ function SignupForm() {
     };
 
     return (
-        <form className="Sign-Up" onSubmit={handleSubmit}>
+        <form className="FormField" onSubmit={handleSubmit}>
             <h2>Sign-Up</h2>
             <span>Crea un nuevo usuario</span>
             <CustomInput
@@ -67,6 +67,7 @@ function SignupForm() {
                 type="text"
                 value={username}
                 name="username" 
+                clase=""
                 onChange={(e) => setUsername(e.target.value)}
             />
             <CustomInput
@@ -74,6 +75,7 @@ function SignupForm() {
                 type="text"
                 value={email}
                 name="email" 
+                clase=""
                 onChange={(e) => setEmail(e.target.value)}
             />
             <CustomInput
@@ -81,6 +83,7 @@ function SignupForm() {
                 type="password"
                 value={password}
                 name="password" 
+                clase=""
                 onChange={(e) => setPassword(e.target.value)}
             />
             <CustomInput
@@ -88,9 +91,10 @@ function SignupForm() {
                 type="password"
                 value={repPassword}
                 name="repPassword" 
+                clase=""
                 onChange={(e) => setRepPassword(e.target.value)}
             />
-            <CustomButton funcion={handleSubmit} type="submit" label="Registrarse" />
+            <CustomButton funcion={handleSubmit} clase="" label="Registrarse" />
         </form>
     );
 }

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Swal from 'sweetalert2';
-import CustomInput from '../Components/Input';
-import CustomButton from '../Components/Button';
+import CustomInput from '../Input.jsx';
+import CustomButton from '../Button.jsx';
 import { useNavigate } from 'react-router-dom';
 
 function LoginForm() {
@@ -57,7 +57,7 @@ function LoginForm() {
     };
 
     return (
-        <form className="Log-In" onSubmit={handleSubmit}>
+        <form className="FormField" onSubmit={handleSubmit}>
             <h2>Login</h2>
             <span>Carga tus datos para comenzar</span>
             <CustomInput
@@ -65,6 +65,7 @@ function LoginForm() {
                 type="text"
                 value={email}
                 name="email"
+                clase=""
                 onChange={(e) => setEmail(e.target.value)}
             />
             <CustomInput
@@ -72,10 +73,11 @@ function LoginForm() {
                 type="password"
                 value={password}
                 name="password"
+                clase=""
                 onChange={(e) => setPassword(e.target.value)}
             />
             <CustomButton
-                type="submit"
+                clase=""
                 label="Iniciar Sesión"
                 funcion={handleSubmit}
             />

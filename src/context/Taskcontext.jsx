@@ -1,90 +1,67 @@
-import { createContext, useState, useContext } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import Swal from 'sweetalert2';
 
-// Crear el contexto
-const TasksContext = createContext();
+import { createContext, useContext, useReducer } from 'react';
 
-// Crear un proveedor que maneje el estado y las tareas
-const TasksProvider = ({ children }) => {
-    const [tareas, setTareas] = useState([]);
+// Creamos un contexto para el manejo de tareas
+const TaskContext = createContext();
 
-    const agregarTarea = (tareaData) => {
-        const { nombre, fechaLimite, horaLimite, tipoTarea } = tareaData;
-        if (!nombre || !fechaLimite || !horaLimite || !tipoTarea) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Por favor, completa todos los campos!',
-            });
-            return;
-        }
-        const id = uuidv4(); // Generar ID único para la tarea
-        const nuevaTarea = {
-            id,
-            nombre,
-            fechaLimite,
-            horaLimite,
-            tipoTarea,
-            realizado: false,
-            eliminado: false,
-        };
-        setTareas((prevTareas) => [...prevTareas, nuevaTarea]);
-        // Guardar tarea en localStorage para el usuario actual
-        const userData = JSON.parse(localStorage.getItem('login_success'));
-        if (userData && userData.email) {
-            const tareasGuardadas = JSON.parse(localStorage.getItem(`tareas_${userData.email}`)) || [];
-            tareasGuardadas.push(nuevaTarea);
-            localStorage.setItem(`tareas_${userData.email}`, JSON.stringify(tareasGuardadas));
-        }
-        Swal.fire({
-            icon: 'success',
-            title: 'Éxito!',
-            text: 'Tu tarea fue creada correctamente!',
-        });
+// Definimos el proveedor del contexto y el inicializador del estado
+export const TaskProvider = ({ children }) => {
+    // Creamos un estado inicial con una lista de tareas vacía
+    const initialState = {
+        user: {
+            // Aquí podrías agregar campos del usuario (nombre, correo, etc.)
+            username: 'Usuario de ejemplo',
+            email: 'usuario@example.com'
+        },
+        tasks: [
+            // Ejemplo de tarea predeterminada
+            {
+                id: 1,
+                name: "Ejemplo de tarea",
+                completed: false
+            }
+        ]
     };
 
-    const cargarTareas = () => {
-        const userData = JSON.parse(localStorage.getItem('login_success'));
-        if (userData && userData.email) {
-            const tareasGuardadas = JSON.parse(localStorage.getItem(`tareas_${userData.email}`)) || [];
-            setTareas(tareasGuardadas);
-        }
-    };
-
-    const eliminarTarea = (id) => {
-        setTareas((prevTareas) => prevTareas.map((tarea) =>
-            tarea.id === id ? { ...tarea, eliminado: true } : tarea
-        ));
-        const userData = JSON.parse(localStorage.getItem('login_success'));
-        if (userData && userData.email) {
-            const tareasGuardadas = JSON.parse(localStorage.getItem(`tareas_${userData.email}`)) || [];
-            const updatedTareas = tareasGuardadas.map((tarea) =>
-                tarea.id === id ? { ...tarea, eliminado: true } : tarea
-            );
-            localStorage.setItem(`tareas_${userData.email}`, JSON.stringify(updatedTareas));
+    // Definimos las acciones para las operaciones CRUD
+    const reducer = (state, action) => { // Reducer opera como un gestor, recibe vun estado y una accion. La accion puede ser Add_task, delete_task o toggle_task
+        switch (action.type) {
+            case 'ADD_TASK':
+                // Lógica para agregar una nueva tarea
+                return { 
+                    ...state, 
+                    tasks: [...state.tasks, action.payload] 
+                };
+            case 'DELETE_TASK':
+                // Lógica para eliminar una tarea
+                return { 
+                    ...state, 
+                    tasks: state.tasks.filter(task => task.id !== action.payload.id) 
+                };
+            case 'TOGGLE_TASK':
+                // Lógica para marcar como completada o pendiente una tarea
+                return {
+                    ...state,
+                    tasks: state.tasks.map(task =>
+                        task.id === action.payload.id ? { ...task, completed: !task.completed } : task
+                    )
+                };
+            default:
+                return state;
         }
     };
 
-    const tareaRealizada = (id) => {
-        setTareas((prevTareas) => prevTareas.map((tarea) =>
-            tarea.id === id ? { ...tarea, realizado: !tarea.realizado } : tarea
-        ));
-        const userData = JSON.parse(localStorage.getItem('login_success'));
-        if (userData && userData.email) {
-            const tareasGuardadas = JSON.parse(localStorage.getItem(`tareas_${userData.email}`)) || [];
-            const updatedTareas = tareasGuardadas.map((tarea) =>
-                tarea.id === id ? { ...tarea, realizado: !tarea.realizado } : tarea
-            );
-            localStorage.setItem(`tareas_${userData.email}`, JSON.stringify(updatedTareas));
-        }
-    };
+    // Creamos el estado con el reducer y el estado inicial
+    const [state, dispatch] = useReducer(reducer, initialState);
 
     return (
-        <TasksContext.Provider value={{ tareas, agregarTarea, cargarTareas, eliminarTarea, tareaRealizada }}>
+        <TaskContext.Provider value={{ state, dispatch }}>
             {children}
-        </TasksContext.Provider>
+        </TaskContext.Provider>
     );
 };
 
-export default TasksProvider;
+// Hook para usar el contexto en cualquier componente
+export const useTaskContext = () => {
+    return useContext(TaskContext);
+};
