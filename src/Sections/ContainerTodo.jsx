@@ -1,17 +1,16 @@
+
+import NewTodo from '../ComponentesContainerTodo/NewTodo.jsx';
 import PerfilTodo from '../ComponentesContainerTodo/PerfilTodo.jsx';
-import NewTodo from '../ComponentesContainerTodo/Newtodo.jsx';
-import TodoList from '../Components/CardTarea.jsx';
-function ContainerTodo () {
+import TodoList from '../ComponentesContainerTodo/TodoList.jsx';
 
-
-return (
-    <>
-        <PerfilTodo />
-        <NewTodo />
-        <TodoList />
-    </>
-)
-
+function ContainerTodo() {
+    return (
+        <div className="container-todo">
+            <PerfilTodo />
+            <NewTodo />
+            <TodoList />
+        </div>
+    );
 }
 
 export default ContainerTodo;

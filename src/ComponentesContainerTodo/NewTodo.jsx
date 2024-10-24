@@ -1,18 +1,18 @@
 import { useState } from 'react';
+import CustomButton from '../Components/Button.jsx';
+import CustomInput from '../Components/Input.jsx';
 import Swal from 'sweetalert2';
-import CustomInput from '../Components/Input.jsx'; // Asegúrate de tener este componente
-import CustomButton from '../Components/Button.jsx'; // Asegúrate de tener este componente
+import useTaskContext from '../context/UseTaskContext.js';
 
 export function NewTodo() {
     const [nombre, setNombre] = useState('');
     const [fechaLimite, setFechaLimite] = useState('');
     const [horaLimite, setHoraLimite] = useState('');
     const [tipoTarea, setTipoTarea] = useState('');
+    const { dispatch } = useTaskContext();
 
     const handleSubmit = (event) => {
         event.preventDefault();
-
-        // Verificación de campos
         if (!nombre || !fechaLimite || !horaLimite || !tipoTarea) {
             Swal.fire({
                 icon: "error",
@@ -23,30 +23,21 @@ export function NewTodo() {
         }
 
         const nuevaTarea = {
+            id: Date.now(),
             nombre,
             fechaLimite,
             horaLimite,
             tipoTarea,
-            realizado: false, // Por defecto la tarea no está realizada
-            eliminado: false // Por defecto la tarea no está eliminada
+            completed: false
         };
 
-        // Obtener tareas anteriores guardadas en localStorage
-        const tareasGuardadas = JSON.parse(localStorage.getItem('tareas')) || [];
-
-        // Agregar la nueva tarea a la lista
-        tareasGuardadas.push(nuevaTarea);
-
-        // Guardar la lista actualizada en localStorage
-        localStorage.setItem('tareas', JSON.stringify(tareasGuardadas));
-
+        dispatch({ type: 'ADD_TASK', payload: nuevaTarea });
         Swal.fire({
             icon: "success",
             title: "Éxito!",
             text: "Tarea agregada correctamente!",
         });
 
-        // Limpiar los campos del formulario
         setNombre('');
         setFechaLimite('');
         setHoraLimite('');
@@ -65,8 +56,8 @@ export function NewTodo() {
                     <option value="trabajo">Trabajo</option>
                     <option value="otro">Otro</option>
                 </select>
+                <CustomButton type="submit" funcion={handleSubmit} label="Agregar Tarea" />
             </form>
-            <CustomButton type="submit" funcion={handleSubmit} label="Agregar Tarea" />
         </>
     );
 }

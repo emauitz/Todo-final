@@ -1,7 +1,7 @@
 import { TaskProvider } from './context/Taskcontext.jsx';
 import AuthProvider from './context/AuthContext.jsx';
 import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';  // Asegúrate de importar desde 'react-dom/client'
+import { createRoot } from 'react-dom/client';  
 import App from './App.jsx';
 import './index.css';
 
