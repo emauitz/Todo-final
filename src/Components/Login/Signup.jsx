@@ -2,6 +2,9 @@ import { useState } from 'react';
 import CustomButton from '../Button';
 import CustomInput from '../Input';
 import Swal from 'sweetalert2';
+import { auth, db } from '../../config/firebase';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { setDoc, doc } from 'firebase/firestore';
 
 function SignupForm() {
     const [username, setUsername] = useState('');
@@ -9,12 +12,12 @@ function SignupForm() {
     const [password, setPassword] = useState('');
     const [repPassword, setRepPassword] = useState('');
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        crearUsuario(username, email, password, repPassword);
+        await crearUsuario(username, email, password, repPassword);
     };
 
-    const crearUsuario = (username, email, password, repPassword) => {
+    const crearUsuario = async (username, email, password, repPassword) => {
         if (!username || !email || !password || !repPassword) {
             Swal.fire({
                 icon: 'error',
@@ -31,31 +34,35 @@ function SignupForm() {
             });
             return;
         }
-        const usuario = { username, email, password };
-        let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
-        const siUsuarioRegistrados = usuarios.find(user => user.email === email);
-        if (siUsuarioRegistrados) {
+
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+
+            // Guardar el nombre de usuario en Firestore
+            await setDoc(doc(db, 'usuarios', user.uid), {
+                username: username,
+                email: email,
+                createdAt: new Date()
+            });
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Éxito!',
+                text: 'Tu usuario fue creado correctamente!',
+            }).then(() => {
+                setUsername('');
+                setEmail('');
+                setPassword('');
+                setRepPassword('');
+            });
+        } catch (error) {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'El email ya está registrado!',
+                text: error.message,
             });
-            return;
         }
-        usuarios.push(usuario);
-        localStorage.setItem('usuarios', JSON.stringify(usuarios));
-        Swal.fire({
-            icon: 'success',
-            title: 'Éxito!',
-            text: 'Tu usuario fue creado correctamente!',
-        }).then(() => {
-            setUsername('');
-            setEmail('');
-            setPassword('');
-            setRepPassword('');
-        }).catch((error) => {
-            console.error('Error al mostrar SweetAlert2:', error);
-        });
     };
 
     return (
@@ -66,35 +73,31 @@ function SignupForm() {
                 placeholder="Nombre"
                 type="text"
                 value={username}
-                name="username" 
-                clase=""
+                name="username"
                 onChange={(e) => setUsername(e.target.value)}
             />
             <CustomInput
                 placeholder="Email"
                 type="text"
                 value={email}
-                name="email" 
-                clase=""
+                name="email"
                 onChange={(e) => setEmail(e.target.value)}
             />
             <CustomInput
                 placeholder="Password"
                 type="password"
                 value={password}
-                name="password" 
-                clase=""
+                name="password"
                 onChange={(e) => setPassword(e.target.value)}
             />
             <CustomInput
                 placeholder="Confirma Password"
                 type="password"
                 value={repPassword}
-                name="repPassword" 
-                clase=""
+                name="repPassword"
                 onChange={(e) => setRepPassword(e.target.value)}
             />
-            <CustomButton funcion={handleSubmit} clase="" label="Registrarse" />
+            <CustomButton funcion={handleSubmit} label="Registrarse" />
         </form>
     );
 }

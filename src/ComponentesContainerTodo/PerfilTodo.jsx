@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import { DateTime } from 'luxon';
+import { db } from '../config/firebase';
+import { doc, getDoc } from 'firebase/firestore';
+import { useAuthContext } from '../context/UseAuthContext';
 
 function obtenerSaludo(hora) {
     if (hora >= 6 && hora < 12) {
@@ -14,17 +17,27 @@ function obtenerSaludo(hora) {
 function PerfilTodo() {
     const [fecha, setFecha] = useState('');
     const [saludo, setSaludo] = useState('');
+    const { usuario } = useAuthContext();
 
     useEffect(() => {
         const ahora = DateTime.now();
         setFecha(ahora.toLocaleString(DateTime.DATE_SHORT));
 
-        const usuario = JSON.parse(localStorage.getItem('login_success'));
-        if (usuario && usuario.username) {
-            const saludo = obtenerSaludo(ahora.hour);
-            setSaludo(`Hola ${usuario.username}, ${saludo}`);
-        }
-    }, []);
+        const cargarUsuario = async () => {
+            if (usuario) {
+                const docRef = doc(db, 'usuarios', usuario.uid);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    const userData = docSnap.data();
+                    const saludo = obtenerSaludo(ahora.hour);
+                    setSaludo(`Hola ${userData.username}, ${saludo}`);
+                }
+            }
+        };
+
+        cargarUsuario();
+    }, [usuario]);
 
     return (
         <div className="perfil">

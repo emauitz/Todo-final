@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from 'react';
-
+import { auth } from '../config/firebase';
+import { onAuthStateChanged, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from 'firebase/auth';
 
 // Crear el contexto
 export const AuthContext = createContext();
@@ -8,28 +9,50 @@ export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
     const [usuario, setUsuario] = useState(null);
 
-    // Cargar los datos del usuario desde localStorage cuando el componente se monta 
+    // Cargar el estado de autenticación
     useEffect(() => {
-        const storedUser = localStorage.getItem('login_success'); // VER esto si no funciona
-        if (storedUser) {
-            setUsuario(JSON.parse(storedUser));
-        }
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            setUsuario(currentUser);
+        });
+        return () => unsubscribe();
     }, []);
 
-    // Función para iniciar sesión (y guardar en localStorage)
-    const login = (userData) => {
-        setUsuario(userData);
-        localStorage.setItem('login_success', JSON.stringify(userData));
+    // Función para iniciar sesión
+    const login = async (email, password) => {
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            setUsuario(userCredential.user);
+        } catch (error) {
+            console.error('Error al iniciar sesión:', error.message);
+            throw error;
+        }
     };
 
-    // Función para cerrar sesión (eliminar de localStorage)
-    const logout = () => {
-        setUsuario(null);
-        localStorage.removeItem('login_success');
+    // Función para cerrar sesión
+    const logout = async () => {
+        try {
+            await signOut(auth);
+            setUsuario(null);
+        } catch (error) {
+            console.error('Error al cerrar sesión:', error.message);
+        }
+    };
+
+    // Función para registrarse
+    const signup = async (username, email, password) => {
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            // Aquí podrías guardar el usuario en Firestore si deseas
+            setUsuario(userCredential.user);
+            // Regresar el username a través de Firestore si es necesario
+        } catch (error) {
+            console.error('Error al registrarse:', error.message);
+            throw error;
+        }
     };
 
     return (
-        <AuthContext.Provider value={{ usuario, login, logout }}>
+        <AuthContext.Provider value={{ usuario, login, logout, signup }}>
             {children}
         </AuthContext.Provider>
     );

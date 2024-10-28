@@ -1,0 +1,20 @@
+@use 'variables'; 
+@use 'mixins';
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: variables.$font-family;
+    background-color: variables.$background-color;
+    background-image: linear-gradient(white 1px, transparent 1px),
+        linear-gradient(to right, white 1px, transparent 1px);
+    background-size: 20px 20px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(9, 1fr);
+    gap: 3px;
+}

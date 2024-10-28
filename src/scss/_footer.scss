@@ -1,0 +1,11 @@
+@use 'variables';
+
+
+.footer {
+    font-family: variables.$font-family;
+    display: grid;
+    grid-column: span 7;
+    align-items: center;
+    justify-content: center;
+  }
+  

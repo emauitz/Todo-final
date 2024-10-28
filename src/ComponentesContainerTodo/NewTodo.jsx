@@ -2,14 +2,14 @@ import { useState } from 'react';
 import CustomButton from '../Components/Button.jsx';
 import CustomInput from '../Components/Input.jsx';
 import Swal from 'sweetalert2';
-import useTaskContext from '../context/UseTaskContext.js';
+import useTaskContext from '../context/UseTaskContext.js'
 
 export function NewTodo() {
     const [nombre, setNombre] = useState('');
     const [fechaLimite, setFechaLimite] = useState('');
     const [horaLimite, setHoraLimite] = useState('');
     const [tipoTarea, setTipoTarea] = useState('');
-    const { dispatch } = useTaskContext();
+    const { addTask } = useTaskContext();
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -23,7 +23,6 @@ export function NewTodo() {
         }
 
         const nuevaTarea = {
-            id: Date.now(),
             nombre,
             fechaLimite,
             horaLimite,
@@ -31,7 +30,7 @@ export function NewTodo() {
             completed: false
         };
 
-        dispatch({ type: 'ADD_TASK', payload: nuevaTarea });
+        addTask(nuevaTarea);
         Swal.fire({
             icon: "success",
             title: "Éxito!",

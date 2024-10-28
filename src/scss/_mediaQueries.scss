@@ -1,0 +1,22 @@
+@media (max-width: 768px) {
+    body {
+        grid-template-columns: repeat(4, 1fr);
+
+        .container,
+        .header,
+        .pie_pagina {
+            grid-column: span 4;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        grid-template-columns: 1fr;
+        .container,
+        .header,
+        .pie_pagina {
+            grid-column: span 1;
+        }
+    }
+}
