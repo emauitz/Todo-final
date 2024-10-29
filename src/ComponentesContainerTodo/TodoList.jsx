@@ -3,24 +3,24 @@ import CardTarea from '../Components/CardTarea.jsx';
 //import { collection, getDocs } from "firebase/firestore";
 //import BBDD from "../config/firebase.js";
 //import { useEffect, useState } from "react";
- const TodoList = () => {
-     const { state } = useTaskContext();
-     const { tasks } = state;
+const TodoList = () => {
+    const { state } = useTaskContext();
+    const { tasks } = state;
 
-     if (!tasks || tasks.length === 0) {
-         return <p>No hay tareas disponibles</p>;
-     }
+    if (!tasks || tasks.length === 0) {
+        return <p>No hay tareas disponibles</p>;
+    }
 
-     return (
-         <div className="todo-list">
-             {tasks.map((tarea) => (
-                 <CardTarea key={tarea.id} tarea={tarea} />
-             ))}
-         </div>
-     );
- };
+    return (
+        <div className="todo-list">
+            {tasks.map((tarea) => (
+                <CardTarea key={tarea.id} tarea={tarea} />
+            ))}
+        </div>
+    );
+};
 
- export default TodoList;
+export default TodoList;
 
 // const TodoList = () => {
 //     const { state } = useTaskContext();

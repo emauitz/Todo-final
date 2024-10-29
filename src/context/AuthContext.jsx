@@ -3,7 +3,7 @@ import { auth } from '../config/firebase';
 import { onAuthStateChanged, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from 'firebase/auth';
 
 // Crear el contexto
-export const AuthContext = createContext();
+const AuthContext = createContext();
 
 // Crear un proveedor que maneje el estado y la autenticación
 const AuthProvider = ({ children }) => {
@@ -42,9 +42,7 @@ const AuthProvider = ({ children }) => {
     const signup = async (username, email, password) => {
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            // Aquí podrías guardar el usuario en Firestore si deseas
             setUsuario(userCredential.user);
-            // Regresar el username a través de Firestore si es necesario
         } catch (error) {
             console.error('Error al registrarse:', error.message);
             throw error;
@@ -58,4 +56,4 @@ const AuthProvider = ({ children }) => {
     );
 };
 
-export default AuthProvider;
+export { AuthContext, AuthProvider };

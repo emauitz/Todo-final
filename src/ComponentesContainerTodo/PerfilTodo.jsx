@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { DateTime } from 'luxon';
 import { db } from '../config/firebase';
 import { doc, getDoc } from 'firebase/firestore';
-import { useAuthContext } from '../context/UseAuthContext';
+import  useAuthContext  from '../context/UseAuthContext';
 
 function obtenerSaludo(hora) {
     if (hora >= 6 && hora < 12) {

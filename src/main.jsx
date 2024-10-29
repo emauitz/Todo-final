@@ -1,5 +1,5 @@
-import { TaskProvider } from './context/Taskcontext.jsx';
-import AuthProvider from './context/AuthContext.jsx';
+import { TaskProvider }  from './context/Taskcontext';
+import { AuthProvider } from './context/AuthContext';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';  
 import App from './App.jsx';
@@ -7,11 +7,12 @@ import './index.css';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <TaskProvider >
-      <AuthProvider>
+    <AuthProvider>
+      <TaskProvider>
         <App />
-      </AuthProvider>
-    </TaskProvider>
+      </TaskProvider>
+    </AuthProvider>
+    
   </StrictMode>,
 );
 

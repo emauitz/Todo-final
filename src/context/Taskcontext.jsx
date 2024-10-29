@@ -4,7 +4,7 @@ import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from 'firebase
 import { db } from '../config/firebase';
 
 // Crear el contexto para el manejo de tareas
-const TaskContext = createContext();
+export const TaskContext = createContext();
 
 // Define el proveedor del contexto y el inicializador del estado
 export const TaskProvider = ({ children }) => {
@@ -85,4 +85,4 @@ TaskProvider.propTypes = {
     children: PropTypes.node.isRequired
 };
 
-export { TaskContext };
+export default TaskProvider;
