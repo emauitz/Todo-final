@@ -4,7 +4,7 @@ import LoginPage from './Components/Login/LoginPage.jsx';
 import MainPage from './Sections/MainPage.jsx';
 import SettingsModal from './ModalSettings/SettingsModal.jsx';
 import { AuthProvider } from './context/AuthContext'; 
-import TaskProvider from './context/TaskContext.jsx'
+import TaskProvider from './context/TaskContext';
 import './css/style.css';
 
 function App() {
