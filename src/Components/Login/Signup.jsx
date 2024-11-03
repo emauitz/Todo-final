@@ -57,6 +57,7 @@ function SignupForm() {
                 setRepPassword('');
             });
         } catch (error) {
+            console.error('Error al crear usuario:', error);
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -97,7 +98,7 @@ function SignupForm() {
                 name="repPassword"
                 onChange={(e) => setRepPassword(e.target.value)}
             />
-            <CustomButton funcion={handleSubmit} label="Registrarse" />
+            <CustomButton funcion={handleSubmit} clase="formButton" label="Registrarse" />
         </form>
     );
 }

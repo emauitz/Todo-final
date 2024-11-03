@@ -4,7 +4,7 @@ import SignupForm from './Signup';
 
 function LoginPage() {
     return (
-        <div>
+        <div className='ContainerAuth'>
             <LoginForm />
             <SignupForm />
         </div>

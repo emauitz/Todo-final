@@ -3,6 +3,7 @@ import TodoNavBar from "./NavBar.jsx"
 import Cotizaciones from "./ApiDolar.jsx"
 import ContainerTodo from "./ContainerTodo.jsx";
 import Footer from "./Footer.jsx"
+import ContainerList from "./ContainerTodoList.jsx";
 
 function MainPage () {
 
@@ -10,6 +11,7 @@ function MainPage () {
         <>
             <TodoNavBar />
             <ContainerTodo />
+            <ContainerList />
             <Cotizaciones /> 
             <Footer />
         </>

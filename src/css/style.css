@@ -5,28 +5,64 @@
 }
 
 body {
+  margin: 0;
   font-family: "Mina", sans-serif;
+  font-weight: 400;
+  font-style: normal;
   background-color: #f9f9f9;
   background-image: linear-gradient(white 1px, transparent 1px), linear-gradient(to right, white 1px, transparent 1px);
   background-size: 20px 20px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.ContainerAuth {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  max-width: 600px;
+  padding: 20px;
+  gap: 20px;
+  background: #fff;
+  border: 2px dashed #000;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  margin: 5px;
+}
+
+.FormField {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.formButton {
+  font-size: 16px;
+  color: black;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.MainPage {
+  flex: 1;
+  width: 100%;
+  padding-right: 15px;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: repeat(9, 1fr);
+  grid-template-rows: repeat(9, auto);
   gap: 3px;
+
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-.nav-bar {
-  width: 90vw;
-  background-color: white;
-  padding: 10px 0;
-  margin-top: 5px;
+.header {
   grid-column: span 7;
+  padding: 10px;
+  margin-top: 5px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -35,162 +71,192 @@ body {
   border: 2px dashed #000;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
-  max-height: 15vh;
+  background-color: #fff;
+  z-index: 100;
 }
-.nav-bar .nombre-app {
+
+.nombre-app {
   margin: 5px;
   font-family: "Mina", sans-serif;
   font-weight: 700;
   font-style: normal;
 }
-.nav-bar ul li .NavbarButton {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-right: 10px;
-}
-.nav-bar h1,
-.nav-bar h2,
-.nav-bar h3 {
-  text-align: center;
-}
 
-/*tablet*/
-@media only screen and (min-width: 768px) {
-  header {
-    display: grid;
-    grid-template-rows: repeat(2, 1fr);
-  }
-  header ul {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-  }
-}
-/**desktop**/
-@media only screen and (min-width: 1200px) {
-  header {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 8rem;
-    align-items: center;
-  }
-  nav {
-    grid-column: span 2;
-  }
-}
-.footer {
-  font-family: "Mina", sans-serif;
-  display: grid;
-  grid-column: span 7;
-  align-items: center;
+.ContainerTodo {
+  grid-column: span 5;
+  grid-row: span 4;
   justify-content: center;
-}
-
-.container .perfil {
-  text-align: center;
-  margin-bottom: 20px;
-}
-.container .agregar-tarea {
+  max-width: 800px;
+  height: auto;
+  margin: 5px;
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
   padding: 10px;
+  background: #fff;
   border: 2px dashed #000;
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
+  overflow-y: auto;
 }
-.container .agregar-tarea #contenedor_input {
+
+.perfil {
+  padding: 0;
+  font-size: large;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+}
+
+.NewTodo {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-bottom: 10px;
-}
-.container .agregar-tarea #contenedor_input input,
-.container .agregar-tarea #contenedor_input select {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-.container .agregar-tarea button {
-  font-size: large;
-  color: black;
-  border: none;
-  cursor: pointer;
-  padding: 10px;
-  background-color: green;
-  border-radius: 5px;
-  width: 100%;
-}
-.container .agregar-tarea button.boton-enter {
-  background-color: #4CAF50;
-  color: white;
 }
 
-.seccion-tareas {
-  background: #fff;
-  border: 1px solid #ccc;
-  padding: 20px;
-  border-radius: 10px;
-  overflow-y: auto;
-  min-height: 30vh;
-  max-height: 80vh;
-}
-.seccion-tareas .elemento {
+.ContInput {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  padding: 10px 0;
-  border: 1px solid grey;
-  background-color: rgba(0, 0, 0, 0);
-  margin: 10px 0;
-  border-radius: 4px;
+  height: 15vh;
+  gap: 5px;
 }
-.seccion-tareas .elemento:last-child {
-  border-bottom: none;
+
+.ContainerApi {
+  grid-column: span 2;
+  grid-row: span 2;
+  grid-column-start: 6;
+  grid-row-start: 3;
+  font-size: 12px;
+  min-width: 200px;
+  min-height: 10vh;
+  padding: 2px;
+  background: #fff;
+  border: 2px dashed #000;
+  border-radius: 10px;
 }
-.seccion-tareas .elemento i {
+
+.DivApi {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 10;
+  padding: 10px;
+}
+
+.ApiCont p {
+  margin-bottom: 10px;  
+}
+
+.ContainerList {
+  grid-column: span 7;
+  grid-row: span 3;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  overflow-y: auto; /* Permitir scroll si el contenido excede la altura */
+}
+
+.TodoList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.card {
+  background: #fff;
+  min-height: 30vh;
+  border: 2px dashed #000;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 20px;
+  margin: 5px;
+  flex: 1 1 calc(16.66% - 20px); /* 100% / 6 = 16.66% para 6 cards por fila */
+  box-sizing: border-box;
+  min-width: 150px; /* Ajusta el tamaño mínimo si es necesario */
+  max-width: 200px;
+}
+
+.CardButton {
+  background: #fff;
+  border: none;
+  color: #000;
+  font-size: 16px;
   cursor: pointer;
+  margin-top: 10px;
 }
-.seccion-tareas .elemento .tarea {
-  width: 90%;
+
+.Footer {
+  grid-column: span 7;
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  gap: 60px;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
 }
-.seccion-tareas .elemento .contenido-expandido {
-  display: none;
-  padding: 10px;
-  width: 90%;
-  margin-top: 10px;
-  background-color: green;
-}
-.seccion-tareas .elemento.expandido .contenido-expandido {
-  display: block;
-  transition: 1s ease-in-out;
+
+
+/* CSS mobile tablet */
+
+@media (max-width: 1024px) {
+  
+  .MainPage {
+    grid-template-columns: 1fr; /* 1 columna */
+    grid-template-rows: auto;
+  }
+
+  .ContainerList, .ContainerTodo {
+    grid-column: span 1;
+    max-width: 100%;
+  }
+
+  .ContainerApi {
+    display: none;
+  }
+
+  .card {
+    flex: 1 1 100%; 
+    max-width: none;
+  }
 }
 
 @media (max-width: 768px) {
-  body {
-    grid-template-columns: repeat(4, 1fr);
+  
+  .MainPage {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
   }
-  body .container,
-  body .header,
-  body .pie_pagina {
-    grid-column: span 4;
-  }
-}
-@media (max-width: 480px) {
-  body {
-    grid-template-columns: 1fr;
-  }
-  body .container,
-  body .header,
-  body .pie_pagina {
-    grid-column: span 1;
-  }
-}
 
-/*# sourceMappingURL=style.css.map */
+  .header {
+    order: 1; 
+  }
+
+  .ContainerTodo {
+    order: 2; 
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ContainerList {
+    order: 3; 
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .ContainerApi {
+    display: none;
+  }
+
+  .card {
+    flex: 1 1 100%; 
+    max-width: none;
+  }
+}

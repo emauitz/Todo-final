@@ -1,9 +1,0 @@
-@use 'variables'; // Importa las variables
-
-@mixin border-dashed {
-    border: 2px dashed variables.$border-color; // Usa el espacio de nombres
-}
-
-@mixin box-shadow {
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
-}

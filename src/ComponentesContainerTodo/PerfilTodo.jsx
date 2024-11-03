@@ -25,14 +25,20 @@ function PerfilTodo() {
 
         const cargarUsuario = async () => {
             if (usuario) {
+                console.log("Usuario autenticado:", usuario)
                 const docRef = doc(db, 'usuarios', usuario.uid);
                 const docSnap = await getDoc(docRef);
 
                 if (docSnap.exists()) {
                     const userData = docSnap.data();
+                    console.log("Datos del usuario:", userData);
                     const saludo = obtenerSaludo(ahora.hour);
                     setSaludo(`Hola ${userData.username}, ${saludo}`);
+                }  else {
+                    console.log("El documento del usuario no existe");
                 }
+            } else {
+                console.log("Usuario no autenticado");
             }
         };
 

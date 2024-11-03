@@ -24,14 +24,17 @@ const Cotizaciones = () => {
     }
 
     return (
-        <div id="Container1">
+        <div className="ContainerApi">
             {cotizaciones.length > 0 &&
                 cotizaciones.map((cotizacion, index) => (
-                    <div key={index}>
+                    <div key={index} className='DivApi'>
                         <h3>Casa: {cotizacion.casa}</h3>
-                        <p>Compra: {cotizacion.compra} ARS</p>
-                        <p>Venta: {cotizacion.venta} ARS</p>
-                        <p>Fecha: {cotizacion.fecha}</p>
+                        <div className='ApiCont'>
+                            <p>Compra: {cotizacion.compra} ARS</p>
+                            <p>Venta: {cotizacion.venta} ARS</p>
+                            <p>Fecha: {cotizacion.fecha}</p>
+                        </div>
+                        
                     </div>
                 ))}
         </div>

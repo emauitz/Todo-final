@@ -15,20 +15,22 @@ function TodoNavBar() {
     };
 
     return (
-        <nav className="nav-bar">
+        <header className='header'>
             <div className="nombre-app">
                 <h1>TODO-APP</h1>
             </div>
-            <ul>
-                <li>
-                    <CustomButton label="Log-out" funcion={handleLogout} clase="NavbarButton" />
-                </li>
-                <li>
-                    <CustomButton label="Settings" funcion={handleSettings} clase="NavbarButton" />
-                </li>
-            </ul>
-            <SettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} /> {/* Cierra el modal */}
-        </nav>
+            <nav className="nav-bar">
+                <ul>
+                    <li>
+                        <CustomButton label="Log-out" funcion={handleLogout} clase="NavbarButton" />
+                    </li>
+                    <li>
+                        <CustomButton label="Settings" funcion={handleSettings} clase="NavbarButton" />
+                    </li>
+                </ul>
+                <SettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} /> {/* Cierra el modal */}
+            </nav>
+        </header>
     );
 }
 

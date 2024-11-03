@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from 'react';
-import { auth } from '../config/firebase';
+import { auth, db } from '../config/firebase';
 import { onAuthStateChanged, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from 'firebase/auth';
-
+import { doc, getDoc } from 'firebase/firestore';
 // Crear el contexto
 const AuthContext = createContext();
 
@@ -11,8 +11,19 @@ const AuthProvider = ({ children }) => {
 
     // Cargar el estado de autenticación
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            setUsuario(currentUser);
+        const unsubscribe = onAuthStateChanged(auth, async(currentUser) => {
+            if (currentUser) {
+                const docRef = doc(db, 'usuarios', currentUser.uid);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    setUsuario({ ...currentUser, ...docSnap.data() });
+                } else {
+                    setUsuario(currentUser);
+                }
+            } else {
+                setUsuario(null);
+            }
         });
         return () => unsubscribe();
     }, []);
@@ -21,7 +32,15 @@ const AuthProvider = ({ children }) => {
     const login = async (email, password) => {
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            setUsuario(userCredential.user);
+            const user = userCredential.user;
+            const docRef = doc(db, 'usuarios', user.uid);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+                setUsuario({ ...user, ...docSnap.data() });
+            } else {
+                setUsuario(user);
+            }
         } catch (error) {
             console.error('Error al iniciar sesión:', error.message);
             throw error;

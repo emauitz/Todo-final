@@ -5,7 +5,7 @@ import MainPage from './Sections/MainPage.jsx';
 import SettingsModal from './ModalSettings/SettingsModal.jsx';
 import { AuthProvider } from './context/AuthContext'; 
 import TaskProvider from './context/TaskContext.jsx'
-import './App.css';
+import './css/style.css';
 
 function App() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -15,8 +15,8 @@ function App() {
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/" element={<MainPage />} />
+            <Route path="/login" element={<div className="LoginPage"><LoginPage /></div>} />
+            <Route path="/" element={<div className="MainPage"><MainPage /></div>} />
           </Routes>
           <SettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} className="ModalSettings" />
         </BrowserRouter>
@@ -25,4 +25,4 @@ function App() {
   );
 }
 
-export default App;
+export default App

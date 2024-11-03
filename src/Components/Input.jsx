@@ -14,10 +14,10 @@ function CustomInput({ placeholder, type, value, name, clase, onChange }) {
 }
 
 CustomInput.propTypes = {
-    placeholder: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
     type: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
+    value: PropTypes.string,
+    name: PropTypes.string,
     clase: PropTypes.string,
     onChange: PropTypes.func.isRequired,
 };

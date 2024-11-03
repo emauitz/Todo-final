@@ -45,6 +45,7 @@ function LoginForm() {
             />
             <CustomButton
                 label="Iniciar Sesión"
+                clase="formButton"
                 funcion={handleSubmit}
             />
         </form>

@@ -46,17 +46,19 @@ export function NewTodo() {
 
     return (
         <>
-            <form onSubmit={handleSubmit}>
-                <CustomInput placeholder="Nombre" type="text" name="inp-Nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} />
-                <CustomInput placeholder="Fecha Límite" type="date" name="inp-Fecha" value={fechaLimite} onChange={(e) => setFechaLimite(e.target.value)} />
-                <CustomInput placeholder="Hora Límite" type="time" name="inp-Hora" value={horaLimite} onChange={(e) => setHoraLimite(e.target.value)} />
-                <select value={tipoTarea} onChange={(e) => setTipoTarea(e.target.value)}>
-                    <option value="">Seleccionar tipo de tarea</option>
-                    <option value="personal">Personal</option>
-                    <option value="trabajo">Trabajo</option>
-                    <option value="otro">Otro</option>
-                </select>
-                <CustomButton type="submit" funcion={handleSubmit} label="Agregar Tarea" />
+            <form className="NewTodo" onSubmit={handleSubmit}>
+                <div className='ContInput'>
+                    <CustomInput placeholder="Nombre" type="text" name="Inp-Todo" value={nombre} onChange={(e) => setNombre(e.target.value)} />
+                    <CustomInput placeholder="Fecha Límite" type="date" name="Inp-Todo" value={fechaLimite} onChange={(e) => setFechaLimite(e.target.value)} />
+                    <CustomInput placeholder="Hora Límite" type="time" name="Inp-Todo" value={horaLimite} onChange={(e) => setHoraLimite(e.target.value)} />
+                    <select value={tipoTarea} onChange={(e) => setTipoTarea(e.target.value)}>
+                        <option value="">Seleccionar tipo de tarea</option>
+                        <option value="personal">Personal</option>
+                        <option value="trabajo">Trabajo</option>
+                        <option value="otro">Otro</option>
+                    </select>
+                </div>
+                <CustomButton className="Nt-button" type="submit" funcion={handleSubmit} label="Agregar Tarea" />
             </form>
         </>
     );
